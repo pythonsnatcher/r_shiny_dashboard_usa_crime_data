@@ -34,7 +34,7 @@ dashboardPage(
               #tab box
               tabBox(id='t1', width = 12, 
                      tabPanel(title = 'About', icon = icon('address-card'), fluidRow(
-                       column(width = 8, tags$img(src = 'crime.png', width = 600, height = 300),
+                       column(width = 8, tags$img(src = 'www/handcuffed-man_cleanup.png', width = 600, height = 300),
                               tags$br(),
                               tags$a(''), align = 'center'),
                        column(width = 4, tags$br(),
