@@ -2,22 +2,25 @@
 
 function(input, output, session) {
   
-  # Structure
+  # Structure (excluding 'state' column)
   output$structure <- renderPrint({
     # Structure of the data
     my_data %>%
+      select(-State) %>% 
       str()
   })
   
-  # Summary
+  # Summary (excluding 'State' column)
   output$summary <- renderPrint({
     my_data %>%
+      select(-State) %>%  # Remove 'State' column before summarizing
       summary()
   })
   
-  # DataTable
+  # DataTable (excluding 'State' column)
   output$dataT <- renderDataTable({
-    my_data
+    my_data %>%
+      select(-State)  # Remove 'State' column from the DataTable
   })
   
   # Stacked Histogram and Box Plot
