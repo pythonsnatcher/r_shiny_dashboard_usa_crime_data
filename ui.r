@@ -184,7 +184,19 @@ dashboardPage(
               inline = TRUE
             ),
             withSpinner(plotlyOutput('scatter'))
-          )
+          ),
+          # Statewise Crime Proportion tab panel
+          tabPanel(
+            title = 'Crime Proportions',
+            tabName = 'pie',
+            selectInput(
+              'stateSelect', 
+              'Select State', 
+              choices = unique(my_data$State), 
+              selected = unique(my_data$State)[1]
+            ),
+            plotlyOutput('pieChart')
+          ),
         )
       ),
       
