@@ -61,7 +61,7 @@ function(input, output, session) {
     
     ggplotly(p)
   })
- 
+  
   
   
   ## Correlation plot
@@ -135,6 +135,54 @@ function(input, output, session) {
   
   
   
+  
+  # Add a reactive expression for the pie chart based on the selected state
+  pieData <- reactive({
+    # Filter the data for the selected state
+    state_data <- my_data %>% filter(State == input$stateSelect)
+    
+    # Create a data frame for the pie chart with predefined crime types
+    pie_df <- data.frame(
+      Category = c("Murder", "Assault", "Rape"),
+      Value = c(
+        state_data$Murder[1],  # Assuming only one row per state
+        state_data$Assault[1], 
+        state_data$Rape[1]
+      )
+    )
+    
+    # Return the data frame
+    pie_df
+  })
+  
+  # Render the pie chart
+  output$pieChart <- renderPlotly({
+    pie_df <- pieData()
+    
+    # Generate the pie chart
+    pie_plot <- pie_df %>%
+      plot_ly(labels = ~Category, values = ~Value, type = 'pie', 
+              textinfo = 'percent', 
+              insidetextorientation = 'radial') %>%
+      layout(
+        title = paste('Proportions of Crimes in', input$stateSelect),
+        showlegend = TRUE,
+        # Improve layout and design
+        margin = list(l = 0, r = 0, t = 50, b = 0),
+        paper_bgcolor = 'white',
+        plot_bgcolor = 'white'
+      )
+    
+    pie_plot
+  })
+  
+  
+  
+  
+  
+  
+  
+  
   # choropleth map
   output$map_plot <- renderPlot({
     new_join %>% 
@@ -151,12 +199,11 @@ function(input, output, session) {
       geom_text(aes(x = x, y = y, label = abb), size = 4, color = 'white')
   })
   
-                            
-                            
-                          
-                          
-    
+  
+  
+  
+  
+  
   
   
 }
-
